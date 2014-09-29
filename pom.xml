@@ -48,9 +48,10 @@
 		<!-- maven-compiler-plugin -->
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
-				
-		<db>hibernate</db>
-		<goal>generateChangeLog</goal>	
+
+		<!-- <db>hibernate</db> -->
+		<db>h2</db>
+		<goal>generateChangeLog</goal>
 	</properties>
 
 	<dependencyManagement>
@@ -64,7 +65,7 @@
 				any version of JBoss EAP that implements Java EE 6. -->
 			<dependency>
 				<groupId>org.jboss.bom</groupId>
-				<artifactId>jboss-javaee-6.0-with-tools</artifactId>
+				<artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
 				<version>${version.jboss.spec.javaee.6.0}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -99,10 +100,23 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>3.2.2</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.181</version>
+        </dependency>
+		
 	</dependencies>
 
 	<build>
@@ -163,11 +177,11 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>liquibase</id>
-			<!-- <activation> <property> Hack to make sure profile is always active. Isn't Maven great? <name>!dummy</name> </property> 
-				</activation> -->
+			<!-- <activation> <property> Hack to make sure profile is always active. 
+				Isn't Maven great? <name>!dummy</name> </property> </activation> -->
 
 			<build>
 				<resources>
@@ -213,7 +227,7 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>		
+		</profile>
 	</profiles>
 
 </project>
