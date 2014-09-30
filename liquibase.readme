@@ -1,0 +1,8 @@
+Examples:
+
+
+generate change log: (default: -Ddb=h2 -Dgoal=generateChangeLog)
+	mvn -Pliquibase compile
+	mvn -Pliquibase -Dgoal=diff compile
+	mvn -Pliquibase liquibase:status
+
