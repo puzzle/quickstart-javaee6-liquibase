@@ -13,25 +13,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.jboss.quickstarts.eap</groupId>
-	<artifactId>jboss-helloworld</artifactId>
+	<groupId>ch.puzzle.quickstarts</groupId>
+	<artifactId>javaee6-liquibase</artifactId>
 	<version>6.2.0.GA</version>
 	<packaging>war</packaging>
-	<name>JBoss EAP Quickstart: helloworld</name>
-	<description>JBoss EAP Quickstart: Helloworld</description>
+	<name>PITC Quickstart: javaee6-liquibase</name>
+	<description>PITC Quickstart: JavaEE 6 project with Liquibase integration</description>
 
-<!-- 	<url>http://jboss.org/jbossas</url> -->
-<!-- 	<licenses> -->
-<!-- 		<license> -->
-<!-- 			<name>Apache License, Version 2.0</name> -->
-<!-- 			<distribution>repo</distribution> -->
-<!-- 			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url> -->
-<!-- 		</license> -->
-<!-- 	</licenses> -->
+	<!-- <url>http://</url> -->
+	<!-- <licenses> -->
+	<!-- <license> -->
+	<!-- <name>Apache License, Version 2.0</name> -->
+	<!-- <distribution>repo</distribution> -->
+	<!-- <url>http://www.apache.org/licenses/LICENSE-2.0.html</url> -->
+	<!-- </license> -->
+	<!-- </licenses> -->
 
 	<properties>
-		<!-- Explicitly declaring the source encoding eliminates the following 
-			message: -->
+		<!-- Explicitly declaring the source encoding eliminates the following message: -->
 		<!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
 			resources, i.e. build is platform dependent! -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,10 +41,15 @@
 
 		<!-- other plugin versions -->
 		<version.war.plugin>2.1.1</version.war.plugin>
-		
+
 		<!-- dependency versions -->
 		<version.h2>1.4.181</version.h2>
-		<version.liquibase>3.2.2</version.liquibase>
+		<!-- do not use versions 3.2.1 and 3.2.2 for liquibase-maven-plugin due to a diff bug:
+		https://liquibase.jira.com/browse/CORE-1987 -->
+		<version.liquibase>3.1.1</version.liquibase>
+		<version.liquibase-slf4j>1.2.1</version.liquibase-slf4j>
+		<version.hibernate4-maven-plugin>1.0.4</version.hibernate4-maven-plugin>
+		<version.ant-contrib>20020829</version.ant-contrib>
 
 		<!-- maven-compiler-plugin -->
 		<maven.compiler.target>1.7</maven.compiler.target>
@@ -121,6 +125,11 @@
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-cdi</artifactId>
 			<version>${version.liquibase}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mattbertolini</groupId>
+			<artifactId>liquibase-slf4j</artifactId>
+			<version>${version.liquibase-slf4j}</version>
 		</dependency>
 
 		<dependency>
@@ -211,15 +220,15 @@
 							<dependency>
 								<groupId>ant-contrib</groupId>
 								<artifactId>ant-contrib</artifactId>
-								<version>20020829</version>
+								<version>${version.ant-contrib}</version>
 							</dependency>
 						</dependencies>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>de.juplo</groupId>
 						<artifactId>hibernate4-maven-plugin</artifactId>
-						<version>1.0.4</version>
+						<version>${version.hibernate4-maven-plugin}</version>
 						<executions>
 							<execution>
 								<goals>
@@ -234,15 +243,14 @@
 							<target>EXPORT</target>
 						</configuration>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.liquibase</groupId>
 						<artifactId>liquibase-maven-plugin</artifactId>
-						<!-- do not use versions 3.2.1 and 3.2.2 due to a diff bug: https://liquibase.jira.com/browse/CORE-1987 -->
-						<version>3.1.1</version>
+						<version>${version.liquibase}</version>
 						<configuration>
 							<propertyFileWillOverride>true</propertyFileWillOverride>
-							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>					
+							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 						</configuration>
 						<executions>
