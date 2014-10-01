@@ -163,23 +163,6 @@
 
 				<plugins>
 
-<!-- 					<plugin> -->
-<!-- 						<groupId>de.juplo</groupId> -->
-<!-- 						<artifactId>hibernate4-maven-plugin</artifactId> -->
-<!-- 						<version>1.0.4</version> -->
-<!-- 						<executions> -->
-<!-- 							<execution> -->
-<!-- 								<goals> -->
-<!-- 									<goal>export</goal> -->
-<!-- 								</goals> -->
-<!-- 							</execution> -->
-<!-- 						</executions> -->
-<!-- 						<configuration> -->
-<!-- 							<hibernateProperties>${project.build.directory}/classes/hibernate.maven-plugin.properties</hibernateProperties> -->
-<!-- 							<target>SCRIPT</target> -->
-<!-- 						</configuration> -->
-<!-- 					</plugin> -->
-
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
@@ -225,55 +208,7 @@
 							</dependency>
 						</dependencies>
 					</plugin>
-					<plugin>
-						<groupId>org.liquibase</groupId>
-						<artifactId>liquibase-maven-plugin</artifactId>
-						<!-- do not use versions 3.2.1 and 3.2.2 due to a diff bug: https://liquibase.jira.com/browse/CORE-1987 -->
-						<version>3.1.1</version>
-						<configuration>
-							<propertyFileWillOverride>true</propertyFileWillOverride>
-							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>
-							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>compile</phase>
-								<goals>  <!-- Variable substitution in goal only works in profiles. -->
-									<goal>${goal}</goal>
-								</goals>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>org.liquibase.ext</groupId>
-								<artifactId>liquibase-hibernate4</artifactId>
-								<version>3.4</version>
-							</dependency>
-							<dependency>
-								<!-- add persistence.xml to plugin classpath -->
-								<groupId>com.puzzleitc</groupId>
-								<artifactId>dummy</artifactId>
-								<version>1.0.0</version>
-								<scope>system</scope>
-								<systemPath>${project.basedir}/target/jboss-helloworld.war</systemPath>
-							</dependency>
-						</dependencies>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>test</id>
-			<build>
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>
-						<filtering>true</filtering>
-					</resource>
-				</resources>
-
-				<plugins>
+					
 					<plugin>
 						<groupId>de.juplo</groupId>
 						<artifactId>hibernate4-maven-plugin</artifactId>
@@ -286,10 +221,31 @@
 							</execution>
 						</executions>
 						<configuration>
+							<force>true</force>
+							<hibernateDialect>org.hibernate.dialect.H2Dialect</hibernateDialect>
 							<hibernateProperties>${project.build.outputDirectory}/liquibase/hibernate.maven-plugin.properties</hibernateProperties>
-<!-- 							<target>SCRIPT</target> -->
 							<target>EXPORT</target>
 						</configuration>
+					</plugin>
+					
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<!-- do not use versions 3.2.1 and 3.2.2 due to a diff bug: https://liquibase.jira.com/browse/CORE-1987 -->
+						<version>3.1.1</version>
+						<configuration>
+							<propertyFileWillOverride>true</propertyFileWillOverride>
+							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>
+							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>process-classes</phase>
+								<goals>  <!-- Variable substitution in goal only works in profiles. -->
+									<goal>${goal}</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>

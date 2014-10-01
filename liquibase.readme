@@ -8,11 +8,18 @@ generate change log: (default: -Ddb=h2 -Dgoal=generateChangeLog)
 	mvn -Ptest hibernate4:export
 
 
+
 aktueller workflow:
 	mvn -Ptest hibernate4:export -Dhibernate.dialect=org.hibernate.dialect.H2Dialect -Dhibernate.export.force=true
 	mvn -Pliquibase -Ddb=diff -Dgoal=diff compile
 	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
 	mvn -Pliquibase liquibase:update
+
+neu:
+	mvn -Pliquibase -Ddb=diff -Dgoal=diff process-classes
+	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
+	mvn -Pliquibase liquibase:update
+	
 
 	
 Drop-Errors beim Generieren der Datenbank können ignoriert werden. z.B:
