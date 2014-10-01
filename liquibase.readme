@@ -18,8 +18,7 @@ aktueller workflow:
 neu:
 	mvn -Pliquibase -Ddb=diff -Dgoal=diff process-classes
 	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
-	
-	
+	mvn package jboss-as:deploy
 
 	
 Drop-Errors beim Generieren der Datenbank können ignoriert werden. z.B:

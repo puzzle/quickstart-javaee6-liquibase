@@ -242,7 +242,7 @@
 						<version>3.1.1</version>
 						<configuration>
 							<propertyFileWillOverride>true</propertyFileWillOverride>
-							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>
+							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>					
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 						</configuration>
 						<executions>

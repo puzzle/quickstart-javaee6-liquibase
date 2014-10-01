@@ -13,13 +13,12 @@ import liquibase.resource.ResourceAccessor;
 
 public class LiquibaseProducer {
 	
-	@Resource(lookup = "java:jboss/datasources/test")
+	@Resource(lookup = "java:comp/env/jdbc/liquibaseDS")
     private DataSource dataSource;
 
     @Produces @LiquibaseType
-    public CDILiquibaseConfig createConfig() {
+    public CDILiquibaseConfig createConfig() {    	
         CDILiquibaseConfig config = new CDILiquibaseConfig();
-        //TODO: read from property file
         config.setChangeLog("liquibase/db.changelog.xml");
         return config;
     }

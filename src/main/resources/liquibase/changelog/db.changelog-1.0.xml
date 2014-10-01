@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet author="pgrogg (generated)" id="1412155091576-1">
-        <createTable tableName="EMPLOYEE">
+    <changeSet author="pgrogg (generated)" id="1412173873499-1">
+        <createTable tableName="DEPARTMENT">
             <column autoIncrement="true" name="ID" type="INT(10)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_7"/>
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_4"/>
             </column>
             <column name="CREATEDAT" type="TIMESTAMP"/>
+            <column name="ACTIVE" type="BOOLEAN(1)"/>
             <column name="NAME" type="VARCHAR(255)"/>
-            <column name="DEPARTMENT_ID" type="INT(10)"/>
         </createTable>
-    </changeSet>
-    <changeSet author="pgrogg (generated)" id="1412155091576-2">
-        <addForeignKeyConstraint baseColumnNames="DEPARTMENT_ID" baseTableName="EMPLOYEE" constraintName="FK_LK0A412KCK2KDC6SLOUSI528S" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="DEPARTMENT"/>
     </changeSet>
 </databaseChangeLog>
