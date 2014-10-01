@@ -97,12 +97,12 @@
 			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -163,22 +163,22 @@
 
 				<plugins>
 
-					<plugin>
-						<groupId>de.juplo</groupId>
-						<artifactId>hibernate4-maven-plugin</artifactId>
-						<version>1.0.4</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>export</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<hibernateProperties>${project.build.directory}/classes/hibernate.maven-plugin.properties</hibernateProperties>
-							<target>SCRIPT</target>
-						</configuration>
-					</plugin>
+<!-- 					<plugin> -->
+<!-- 						<groupId>de.juplo</groupId> -->
+<!-- 						<artifactId>hibernate4-maven-plugin</artifactId> -->
+<!-- 						<version>1.0.4</version> -->
+<!-- 						<executions> -->
+<!-- 							<execution> -->
+<!-- 								<goals> -->
+<!-- 									<goal>export</goal> -->
+<!-- 								</goals> -->
+<!-- 							</execution> -->
+<!-- 						</executions> -->
+<!-- 						<configuration> -->
+<!-- 							<hibernateProperties>${project.build.directory}/classes/hibernate.maven-plugin.properties</hibernateProperties> -->
+<!-- 							<target>SCRIPT</target> -->
+<!-- 						</configuration> -->
+<!-- 					</plugin> -->
 
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -262,6 +262,39 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>test</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+
+				<plugins>
+					<plugin>
+						<groupId>de.juplo</groupId>
+						<artifactId>hibernate4-maven-plugin</artifactId>
+						<version>1.0.4</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>export</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<hibernateProperties>${project.build.outputDirectory}/liquibase/hibernate.maven-plugin.properties</hibernateProperties>
+<!-- 							<target>SCRIPT</target> -->
+							<target>EXPORT</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 </project>

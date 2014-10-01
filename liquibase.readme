@@ -3,6 +3,23 @@ Examples:
 
 generate change log: (default: -Ddb=h2 -Dgoal=generateChangeLog)
 	mvn -Pliquibase compile
-	mvn -Pliquibase -Dgoal=diff compile
+	mvn -Pliquibase -Ddb=diff -Dgoal=diff compile
 	mvn -Pliquibase liquibase:status
+	mvn -Ptest hibernate4:export
 
+
+aktueller workflow:
+	mvn -Ptest hibernate4:export -Dhibernate.dialect=org.hibernate.dialect.H2Dialect -Dhibernate.export.force=true
+	mvn -Pliquibase -Ddb=diff -Dgoal=diff compile
+	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
+	mvn -Pliquibase liquibase:update
+
+	
+Drop-Errors beim Generieren der Datenbank können ignoriert werden. z.B:
+[ERROR] HHH000389: Unsuccessful: alter table Employee drop constraint FK_lk0a412kck2kdc6slousi528s if exists
+[ERROR] Table "EMPLOYEE" not found; SQL statement:
+
+    alter table Employee 
+        drop constraint FK_lk0a412kck2kdc6slousi528s if exists; [42102-181]
+
+        

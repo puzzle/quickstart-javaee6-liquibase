@@ -4,16 +4,18 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="1" author="philipp">
-		<createTable tableName="department">
-			<column name="id" type="int">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="name" type="varchar(50)">
-				<constraints nullable="false" />
-			</column>
-			<column name="active" type="boolean" defaultValueBoolean="true" />
-		</createTable>
-	</changeSet>
+	<changeSet author="pgrogg (generated)" id="1412151201195-1">
+        <createTable tableName="EMPLOYEE">
+            <column autoIncrement="true" name="ID" type="INT(10)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_7"/>
+            </column>
+            <column name="CREATEDAT" type="TIMESTAMP"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="DEPARTMENT_ID" type="INT(10)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="pgrogg (generated)" id="1412151201195-2">
+        <addForeignKeyConstraint baseColumnNames="DEPARTMENT_ID" baseTableName="EMPLOYEE" constraintName="FK_LK0A412KCK2KDC6SLOUSI528S" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="DEPARTMENT"/>
+    </changeSet>
 
 </databaseChangeLog>

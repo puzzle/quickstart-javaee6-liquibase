@@ -1,6 +1,10 @@
 package ch.puzzle.quickstart.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Department extends BaseEntity {
@@ -10,6 +14,9 @@ public class Department extends BaseEntity {
 	private String name;
 
 	private Boolean active;
+	
+	@OneToMany(mappedBy="department")
+    private List<Employee> employees = new ArrayList<>();
 
 	public String getName() {
 		return name;
