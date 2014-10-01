@@ -20,14 +20,14 @@
 	<name>JBoss EAP Quickstart: helloworld</name>
 	<description>JBoss EAP Quickstart: Helloworld</description>
 
-	<url>http://jboss.org/jbossas</url>
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<distribution>repo</distribution>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-		</license>
-	</licenses>
+<!-- 	<url>http://jboss.org/jbossas</url> -->
+<!-- 	<licenses> -->
+<!-- 		<license> -->
+<!-- 			<name>Apache License, Version 2.0</name> -->
+<!-- 			<distribution>repo</distribution> -->
+<!-- 			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url> -->
+<!-- 		</license> -->
+<!-- 	</licenses> -->
 
 	<properties>
 		<!-- Explicitly declaring the source encoding eliminates the following 
@@ -37,17 +37,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- JBoss dependency versions -->
-
 		<version.jboss.maven.plugin>7.4.Final</version.jboss.maven.plugin>
-
 		<version.jboss.spec.javaee.6.0>1.0.7.Final</version.jboss.spec.javaee.6.0>
 
 		<!-- other plugin versions -->
 		<version.war.plugin>2.1.1</version.war.plugin>
+		
+		<!-- dependency versions -->
+		<version.h2>1.4.181</version.h2>
+		<version.liquibase>3.2.2</version.liquibase>
 
 		<!-- maven-compiler-plugin -->
-		<maven.compiler.target>1.6</maven.compiler.target>
-		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
 
 		<db>h2</db>
 		<goal>generateChangeLog</goal>
@@ -113,13 +115,18 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>3.2.2</version>
+			<version>${version.liquibase}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-cdi</artifactId>
+			<version>${version.liquibase}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.181</version>
+			<version>${version.h2}</version>
 		</dependency>
 
 	</dependencies>

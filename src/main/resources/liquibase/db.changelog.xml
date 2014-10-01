@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+						http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    					http://www.liquibase.org/xml/ns/dbchangelog-ext
+    					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="pgrogg (generated)" id="1412151201195-1">
-        <createTable tableName="EMPLOYEE">
-            <column autoIncrement="true" name="ID" type="INT(10)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_7"/>
-            </column>
-            <column name="CREATEDAT" type="TIMESTAMP"/>
-            <column name="NAME" type="VARCHAR(255)"/>
-            <column name="DEPARTMENT_ID" type="INT(10)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pgrogg (generated)" id="1412151201195-2">
-        <addForeignKeyConstraint baseColumnNames="DEPARTMENT_ID" baseTableName="EMPLOYEE" constraintName="FK_LK0A412KCK2KDC6SLOUSI528S" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="DEPARTMENT"/>
-    </changeSet>
+	<include file="liquibase/changelog/db.changelog-1.0.xml"/>
 
 </databaseChangeLog>
