@@ -112,22 +112,12 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>${version.liquibase}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-cdi</artifactId>
 			<version>${version.liquibase}</version>
 		</dependency>
 		<dependency>
+			<!-- logging adapter to prevent liquibase from logging to stderr -->
 			<groupId>com.mattbertolini</groupId>
 			<artifactId>liquibase-slf4j</artifactId>
 			<version>${version.liquibase-slf4j}</version>
@@ -167,9 +157,6 @@
 
 		<profile>
 			<id>liquibase</id>
-			<!-- <activation> <property> Hack to make sure profile is always active. 
-				Isn't Maven great? <name>!dummy</name> </property> </activation> -->
-
 			<build>
 				<resources>
 					<resource>

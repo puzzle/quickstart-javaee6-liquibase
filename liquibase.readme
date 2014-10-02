@@ -1,4 +1,5 @@
-The pom in this directories integrates Liquibase:
+This readme describes the use of the integrated liquibase-maven-plugin.
+For further documentation read https://twiki.puzzle.ch/bin/view/Puzzle/Javaee6-liquibase
 
 Supported properties:
    * db: specifies the database to run Liquibase against. The file src/main/resources/liquibase/liquibase-$db.properties is used to configure Liquibase. Default: h2.
