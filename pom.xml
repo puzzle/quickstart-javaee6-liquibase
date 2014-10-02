@@ -57,7 +57,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 
 		<db>h2</db>
-		<goal>generateChangeLog</goal>
+		<goal>updateSQL</goal>
 	</properties>
 
 	<dependencyManagement>
@@ -232,6 +232,7 @@
 						<version>${version.hibernate4-maven-plugin}</version>
 						<executions>
 							<execution>
+								<phase>compile</phase>
 								<goals>
 									<goal>export</goal>
 								</goals>
@@ -256,7 +257,7 @@
 						</configuration>
 						<executions>
 							<execution>
-								<phase>process-classes</phase>
+								<phase>compile</phase>
 								<goals>  <!-- Variable substitution in goal only works in profiles. -->
 									<goal>${goal}</goal>
 								</goals>

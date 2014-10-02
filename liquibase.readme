@@ -1,35 +1,20 @@
+The pom in this directories integrates Liquibase:
 
+Supported properties:
+   * db: specifies the database to run Liquibase against. The file src/main/resources/liquibase/liquibase-$db.properties is used to configure Liquibase. Default: h2.
+   * goal: specifies the Liquibase goal to run: http://www.liquibase.org/documentation/maven/. Default: updateSQL
 
-aktueller workflow:
-	mvn -Pliquibase -Ddb=diff -Dgoal=diff process-classes
-	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
-	mvn package jboss-as:deploy
+Examples:
 
+Generates the SQL that is required to update the database to the current version:
+   * mvn compile -Pliquibase
 
+Generates a Liquibase changelog between the current development database and the current entity model:
+   * mvn compile -Pliquibase -Dgoal=diff
 
+Deploy .war to JBoss and let Liquibase update the database
+   * mvn package jboss-as:deploy
 
+Print which Liquibase changelogs would be applied to oracle database:
+   * mvn compile -Pliquibase -Ddb=ora -Dgoal=status
 
-
-Drop-Errors beim Generieren der Datenbank können ignoriert werden. z.B:
-[ERROR] HHH000389: Unsuccessful: alter table Employee drop constraint FK_lk0a412kck2kdc6slousi528s if exists
-[ERROR] Table "EMPLOYEE" not found; SQL statement:
-
-    alter table Employee 
-        drop constraint FK_lk0a412kck2kdc6slousi528s if exists; [42102-181]
-
-
-
-----------------------
-alter workflow:
-	mvn -Ptest hibernate4:export -Dhibernate.dialect=org.hibernate.dialect.H2Dialect -Dhibernate.export.force=true
-	mvn -Pliquibase -Ddb=diff -Dgoal=diff compile
-	copy generated content of ${project.build.directory}/liquibase/diff.changelog.xml to a new change set.
-	mvn -Pliquibase liquibase:update
-	
-
-Examples:	        
-(default: -Ddb=h2 -Dgoal=generateChangeLog)
-	mvn -Pliquibase compile
-	mvn -Pliquibase -Ddb=diff -Dgoal=diff compile
-	mvn -Pliquibase liquibase:status
-	mvn -Ptest hibernate4:export
