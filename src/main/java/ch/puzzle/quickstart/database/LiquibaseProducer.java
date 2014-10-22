@@ -20,6 +20,10 @@ public class LiquibaseProducer {
     public CDILiquibaseConfig createConfig() {    	
         CDILiquibaseConfig config = new CDILiquibaseConfig();
         config.setChangeLog("liquibase/db.changelog.xml");
+        // If you like to drop the whole database before upgrading (e.g. in unit tests)
+        /*if (I am on database XYZ) {
+			config.setDropFirst(true);
+		}*/
         return config;
     }
 

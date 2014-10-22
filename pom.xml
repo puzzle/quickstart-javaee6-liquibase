@@ -39,10 +39,8 @@
 		<!-- JBoss dependency versions -->
 		<version.jboss.maven.plugin>7.4.Final</version.jboss.maven.plugin>
 		<version.jboss.spec.javaee.6.0>1.0.7.Final</version.jboss.spec.javaee.6.0>
-
 		<!-- other plugin versions -->
 		<version.war.plugin>2.1.1</version.war.plugin>
-
 		<!-- dependency versions -->
 		<version.h2>1.4.181</version.h2>
 		<!-- do not use versions 3.2.1 and 3.2.2 for liquibase-maven-plugin due 
@@ -51,11 +49,16 @@
 		<version.liquibase-slf4j>1.2.1</version.liquibase-slf4j>
 		<version.hibernate4-maven-plugin>1.0.4</version.hibernate4-maven-plugin>
 		<version.ant-contrib>20020829</version.ant-contrib>
+		<version.properties-maven-plugin>1.0-alpha-2</version.properties-maven-plugin>
 
 		<!-- maven-compiler-plugin -->
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
 
+		<!-- Directories -->
+		<project.build.resourceDirectory>${project.basedir}/src/main/resources</project.build.resourceDirectory>
+
+		<!-- Default values -->
 		<db>h2</db>
 		<goal>updateSQL</goal>
 	</properties>
@@ -105,8 +108,8 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-		
+
+
 		<!-- compile scope for dependencies NOT included in JBoss EAP 6 -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
@@ -125,11 +128,20 @@
 			<artifactId>h2</artifactId>
 			<version>${version.h2}</version>
 		</dependency>
-		
+
 
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>properties-maven-plugin</artifactId>
+					<version>${version.properties-maven-plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<!-- Set the name of the war, used as the context root when the app is 
 			deployed -->
 		<finalName>${project.artifactId}</finalName>
@@ -147,6 +159,24 @@
 				<groupId>org.jboss.as.plugins</groupId>
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>${version.jboss.maven.plugin}</version>
+			</plugin>
+			<plugin>
+				<!-- Read property files on initialize phase -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${project.build.resourceDirectory}/liquibase/liquibase.global.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -224,9 +254,14 @@
 							</execution>
 						</executions>
 						<configuration>
-							<force>true</force>
-							<hibernateDialect>org.hibernate.dialect.H2Dialect</hibernateDialect>
-							<hibernateProperties>${project.build.outputDirectory}/liquibase/hibernate.maven-plugin.properties</hibernateProperties>
+							<driverClassName>${db.diff.driver_class}</driverClassName>
+							<url>${db.diff.url}</url>
+							<username>${db.diff.username}</username>
+							<password>${db.diff.password}</password>
+							<hibernateNamingStrategy>${db.diff.naming_strategy}</hibernateNamingStrategy>
+							<envers>${db.diff.envers}</envers>
+							<force>${db.diff.force}</force>
+							<hibernateDialect>${db.diff.dialect}</hibernateDialect>
 							<target>EXPORT</target>
 						</configuration>
 					</plugin>
@@ -236,6 +271,16 @@
 						<artifactId>liquibase-maven-plugin</artifactId>
 						<version>${version.liquibase}</version>
 						<configuration>
+							<!-- default values from liquibase.global.properties -->
+							<referenceDriver>${db.diff.driver_class}</referenceDriver>
+							<referenceUrl>${db.diff.url}</referenceUrl>
+							<referenceUsername>${db.diff.username}</referenceUsername>
+							<referencePassword>${db.diff.password}</referencePassword>
+							<changeLogFile>${liquibase.changeLogFile}</changeLogFile>
+							<outputChangeLogFile>${liquibase.outputChangeLogFile}</outputChangeLogFile>
+							<diffChangeLogFile>${liquibase.diffChangeLogFile}</diffChangeLogFile>
+							<outputFileEncoding>${liquibase.outputFileEncoding}</outputFileEncoding>
+							<!-- database specific properties; will override default values -->
 							<propertyFileWillOverride>true</propertyFileWillOverride>
 							<propertyFile>${project.build.outputDirectory}/liquibase/liquibase-${db}.properties</propertyFile>
 							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
