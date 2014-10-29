@@ -12,8 +12,8 @@
 		<res-ref-name>jdbc/liquibaseDS</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
-<!-- 		<lookup-name>java:jboss/datasources/ExampleDS</lookup-name> -->
-		<lookup-name>java:jboss/datasources/h2Test</lookup-name>
+		<lookup-name>java:jboss/datasources/ExampleDS</lookup-name>
+<!-- 		<lookup-name>java:jboss/datasources/h2Test</lookup-name> -->
 <!-- 		<lookup-name>java:jboss/datasources/postgresqlTest</lookup-name> -->
 	</resource-ref>
 </web-app>
