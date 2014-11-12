@@ -11,6 +11,11 @@ import liquibase.integration.cdi.annotations.LiquibaseType;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 
+/**
+ * The CDI Liquibase integration is a simple CDI extension that performs a
+ * Liquibase update when the CDI container boots.
+ *
+ */
 public class LiquibaseProducer {
 	
 	@Resource(lookup = "java:comp/env/jdbc/liquibaseDS")
