@@ -3,7 +3,7 @@
 	<persistence-unit name="jboss-helloworld">
 	<jta-data-source>java:comp/env/jdbc/liquibaseDS</jta-data-source>
 		<properties>
-			
+            <property name="wildfly.jpa.twophasebootstrap" value="false"/>
 		</properties>
 	</persistence-unit>
 </persistence>
