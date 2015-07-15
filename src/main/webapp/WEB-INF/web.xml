@@ -13,7 +13,7 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 <!--		<lookup-name>java:jboss/datasources/ExampleDS</lookup-name> -->
-<!--		<lookup-name>java:jboss/datasources/PostgreSQLDS</lookup-name> -->
- 		<lookup-name>java:jboss/datasources/MySQLDS</lookup-name>
+		<lookup-name>java:jboss/datasources/PostgreSQLDS</lookup-name>
+<!-- 		<lookup-name>java:jboss/datasources/MySQLDS</lookup-name> -->
 	</resource-ref>
 </web-app>
